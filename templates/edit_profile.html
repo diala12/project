@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head> 
+	<title>Edit Your Profile</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- More Bootstrap -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+    <meta name="author" content="">
+
+	<!-- Bootstrap core CSS -->
+	<!--<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">-->
+	<link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+	<!-- Custom CSS -->
+	 <!-- Theme CSS -->
+    <link href="{{ url_for('static', filename='css/freelancer.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='fonts/Montserrat:400,700') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='fonts/Lato:400,700,400italic,700italic') }}" rel="stylesheet" type="text/css">
+    
+
+	<!-- Our css file -->
+	<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='js/main.js') }}" rel="stylesheet">
+
+</head>
+<body>
+	<div id="navbar" style="margin-bottom: 10%;">
+		<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom affix-top">
+	        <div class="container">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header page-scroll">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+	                </button>
+	                <a class="navbar-brand" href="{{ url_for('main') }}">Main Menu</a>
+	            </div>
+
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav navbar-right">
+	                    <li class="hidden active">
+	                        <a href="#page-top"></a>
+	                    </li>
+	                    <li class="page-scroll">
+	                        <a href="{{ url_for('profile', user_id=user.id) }}">Profile</a>
+	                    </li>
+	                    <li class="page-scroll">
+	                        <a href="{{ url_for('main') }}#about">About</a>
+	                    </li>
+	                    <li class="page-scroll">
+	                        <a href="{{ url_for('logout') }}">Sign Out</a>
+	                    </li>
+	                </ul>
+	            </div>
+	            <!-- /.navbar-collapse -->
+	        </div>
+	        <!-- /.container-fluid -->
+	    </nav>
+	</div>
+
+	<div class="container">
+
+		<h1>{{ user.name }}</h1>
+
+		<form action="{{ url_for('edit_profile') }}" method="post" role="form">
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-4">
+						<label for="pic">Profile Picture:</label>
+						{% if user.pic != "" %}
+						<input type="text" name="pic" value="{{ user.pic }}"  id="pic" class='form-control'>
+						{% else %}
+						<input type="text" name="pic" placeholder="Enter a picture URL here"  id="pic" class='form-control'>
+						<br>
+						{% endif %}
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-5"></div>
+					<div class="col-md-2">
+						
+
+						<label for="name">User name:</label>
+						<input type="text" name="fullname" value="{{ user.username }}" id="username" class='form-control'>
+						<br>
+					</div>
+					<div class="col-md-5"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-5"></div>
+					<div class="col-md-2">	
+
+
+						<label for="name">Full name:</label>
+						<input type="text" name="fullname" value="{{ user.name }}" id="name" class='form-control'>
+						<br>
+					</div>
+					<div class="col-md-5"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-5"></div>
+					<div class="col-md-2">
+						<label for="pass">Password:</label>
+						<input type="password" name= "password" value="{{ user.password }}" id="pass" class='form-control'>
+						<br>
+					</div>
+					<div class="col-md-5"></div>
+				</div>
+			</div>
+
+			{% if user.gender == 'Male' %}
+			Gender:
+			<label class="radio-inline"><input type="radio" name="gender" value="Male" checked>Male</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="Other" >Other</label>
+			{% elif user.gender == 'Female' %}
+			<label class="radio-inline"><input type="radio" name="gender" value="Male">Male</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="Female" checked>Female</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="Other">Other</label>
+			{% else %}
+			<label class="radio-inline"><input type="radio" name="gender" value="Male">Male</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="Female">Female</label>
+			<label class="radio-inline"><input type="radio" name="gender" value="Other" checked>Other</label>
+			{% endif %}
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-5"></div>
+					<div class="col-md-2">
+						<label for="nat">Nationality:</label>
+						<input type="text" name="nationality" value="{{ user.nationality }}" id="nat" class='form-control'>
+						<br>
+					</div>
+					<div class="col-md-5"></div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-4">
+						<label for="desc">Description:></label>
+						<textarea class="form-control" rows="5" name="bio" value="{{ user.bio }}" id="desc" class='form-control'>{{ user.bio }}</textarea>
+						<br>
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+			</div>
+
+			<input type="submit" value="Submit" class="btn btn-info" role="button">
+
+		</form>
+		<a href="{{ url_for('profile', user_id=user.id) }}" role="button" class="btn btn-default" style="margin-top: 0.5em; margin-bottom: 2em;">Cancel</a>
+	</div>
+
+</body>
+</html>

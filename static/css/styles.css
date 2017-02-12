@@ -1,0 +1,64 @@
+.carousel-inner > .item > img, .carousel-inner > .item > a > img {
+	width: 70%;
+	margin: auto;
+}
+.carousel-control.left, .carousel-control.right {
+	background-image: none;
+}
+body {
+	text-align: center;
+	
+}
+#navbar {
+	/*margin-bottom: 10%;*/
+}
+nav#mainNav {
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+#login-img {
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
+}
+#page-top {
+	background-image: url('../img/Main_page_pic.jpg');
+	/*background-size: initial;*/
+	/*background-position: 0% -10%;*/
+	margin-top: 0px;
+	background-repeat: no-repeat;
+	}
+.default {
+	background-color: #2C3E50;
+	background-image: url("/static/img/bg.jpg");
+	color: black;
+}
+.default .container {
+  padding-bottom: 3.125em;
+}
+.default .intro-text .name {
+  display: block;
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 2em;
+}
+.default .intro-text .skills {
+  font-size: 1.25em;
+  font-weight: 300;
+}
+.event {
+	width: 31.25em;
+	height: 15.625em;
+	background-color: white;
+	border: 0.3125em solid #2C3E50;
+	border-radius: 0.625em;
+	float: center;
+	text-align: center;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+
+}
+
+th {
+	text-align: center;
+}

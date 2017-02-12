@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{ event.title }}</title>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- More Bootstrap -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="">
+    <meta name="author" content="">
+
+	<!-- Bootstrap core CSS -->
+	<!--<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">-->
+	<link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+	<!-- Custom CSS -->
+	 <!-- Theme CSS -->
+    <link href="{{ url_for('static', filename='css/freelancer.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='fonts/Montserrat:400,700') }}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='fonts/Lato:400,700,400italic,700italic') }}" rel="stylesheet" type="text/css">
+    
+
+	<!-- Our css file -->
+	<link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='js/main.js') }}" rel="stylesheet">
+</head>
+
+<body style="margin-bottom: 3.125em;" background="/static/img/bg2.jpg">
+	<div id="navbar" style="margin-bottom: 10%;">
+		<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom affix-top">
+	        <div class="container">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header page-scroll">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+	                </button>
+	                <a class="navbar-brand" href="{{ url_for('main') }}">Main Menu</a>
+	            </div>
+
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav navbar-right">
+	                    <li class="hidden active">
+	                        <a href="#page-top"></a>
+	                    </li>
+	                    <li class="page-scroll">
+	                        <a href="{{ url_for('profile', user_id=user.id) }}">Profile</a>
+	                    </li>
+	                    <li class="page-scroll">
+	                        <a href="{{ url_for('main') }}#about">About</a>
+	                    </li>
+	                    <li class="page-scroll">
+	                        <a href="{{ url_for('logout') }}">Sign Out</a>
+	                    </li>
+	                </ul>
+	            </div>
+	            <!-- /.navbar-collapse -->
+	        </div>
+	        <!-- /.container-fluid -->
+	    </nav>
+	</div>
+
+
+	<div class="container">
+		<h2>{{ event.title }}</h2>
+		<h4>{{ event.date.day }}.{{ event.date.month }}.{{ event.date.year }}</h4>
+
+		<br>
+		<p>{{ event.description }}</p>
+		<p><b>Location:</b> {{ event.location }}</p>
+		<!-- Table of people -->
+
+
+		<table class="table">
+			<thead>
+				<tr rowcolor=black>
+					<th>Name</th>
+					<th>Nationality</th>
+					<th>Role</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for attendance in attendance_list %}
+				<tr>
+					<td><h4><a href="{{ url_for('profile', user_id=attendance.person_id) }}">{{ attendance.person.name }}</a></h4></td>
+					<td><h4>{{ attendance.person.nationality }}</h4></td>
+					{% if attendance.chef_flag == True %}
+					<td><h4>Chef</h4></td>
+
+					{% else %}
+					<td><h4>Attending</h4></td>
+					{% endif %}
+					{% endfor %}
+				</tr>
+					<br>
+
+			</tbody>
+		</table>
+
+		<!-- End of table -->
+
+		{% if event.owner_id != user.id %} <!-- If the current user is not the owner of the event -->
+
+		{% if already_attending == True %} <!-- If the user is already attending the event -->
+		<a href="{{ url_for('unattend_event', event_id = event.id) }}" role="button" class="btn btn-danger" style="margin-right: 0.625em;">Cancel attendance</a>
+
+		{% else %} <!-- Else the user is not attending -->
+		<a href="{{ url_for('attend_event', event_id = event.id) }}?chef=1" role="button" class="btn btn-warning" style="margin-right: 0.625em;">Cook in this event</a>
+		<a href="{{ url_for('attend_event', event_id = event.id) }}?chef=0" role="button" class="btn btn-primary" style="margin-right: 0.625em;">Attend this event</a>
+		{% endif %} <!-- End attending if -->
+
+		{% else %}
+
+		<a href="{{ url_for('edit_event') }}" role="button" class="btn btn-success" style="margin-right: 0.625em;">Edit</a>
+
+		{% endif %} <!-- End owner if -->
+
+		<a href="{{ url_for('main') }}" role="button" class="btn btn-default">Back</a>
+
+
+	</div>
+</body>
+</html>
